@@ -17,6 +17,7 @@ import { Report } from './reports/report.entity';
       password: 'mohammed12345',
       database: 'my_car_value',
       entities: [User, Report],
+      // disable it in production
       synchronize: true,
     }),
     UsersModule,
@@ -26,3 +27,4 @@ import { Report } from './reports/report.entity';
   providers: [AppService],
 })
 export class AppModule {}
+ 
