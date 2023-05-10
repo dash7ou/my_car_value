@@ -14,11 +14,11 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return this.repo.findOne(id);
+    return this.repo.findOne({ where: { id } });
   }
 
   find(email: string) {
-    return this.repo.find({ email });
+    return this.repo.find({ where: { email } });
   }
 
   // partial told ts that this object contains at least one or none of User proprity
