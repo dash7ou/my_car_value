@@ -9,6 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
 
 @Controller('auth')
@@ -28,5 +29,15 @@ export class UsersController {
   @Get()
   findAllUsers(@Query('email') email: string) {
     return this.userServ.find(email);
+  }
+
+  @Patch('/:id')
+  updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+    return this.userServ.update(+id, body);
+  }
+
+  @Delete('/:id')
+  removeUser(@Param('id') id: string) {
+    return this.userServ.remove(+id);
   }
 }
