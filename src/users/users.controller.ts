@@ -27,7 +27,6 @@ export class UsersController {
   @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
-    console.log('handler is running!!');
     const user = await this.userServ.findOne(+id);
     if (!user) {
       throw new NotFoundException('User not found!');
@@ -36,11 +35,13 @@ export class UsersController {
     return user;
   }
 
+  @Serialize(UserDto)
   @Get()
   findAllUsers(@Query('email') email: string) {
     return this.userServ.find(email);
   }
 
+  @Serialize(UserDto)
   @Patch('/:id')
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return this.userServ.update(+id, body);
