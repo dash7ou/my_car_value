@@ -29,5 +29,21 @@ export class AuthService {
     return user;
   }
 
-  signin() {}
+  async signin(email: string, password: string) {
+    // check email is exist
+    const [user] = await this.userServ.find(email);
+
+    if (!user) {
+      throw new BadRequestException('Check ur email or password!');
+    }
+
+    const [salt, storedHash] = user.password.split('.');
+    const hash = (await scrypt(password, salt, 32)) as Buffer;
+
+    if (hash.toString('hex') !== storedHash) {
+      throw new BadRequestException('Check ur email or password!');
+    }
+
+    return user;
+  }
 }

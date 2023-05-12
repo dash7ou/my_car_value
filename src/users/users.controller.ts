@@ -20,9 +20,16 @@ import { AuthService } from './auth.service';
 export class UsersController {
   constructor(private userServ: UsersService, private authServ: AuthService) {}
 
+  @Serialize(UserDto)
   @Post('/singup')
   createUser(@Body() body: CreateUserDto) {
-    this.authServ.signup(body.email, body.password);
+    return this.authServ.signup(body.email, body.password);
+  }
+
+  @Serialize(UserDto)
+  @Post('/signin')
+  signin(@Body() body: CreateUserDto) {
+    return this.authServ.signin(body.email, body.password);
   }
 
   @Serialize(UserDto)
