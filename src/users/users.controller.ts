@@ -38,6 +38,12 @@ export class UsersController {
   }
 
   @Serialize(UserDto)
+  @Get('/whoami')
+  whoami(@Session() session: any) {
+    return this.userServ.findOne(session.userId);
+  }
+
+  @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
     const user = await this.userServ.findOne(+id);
