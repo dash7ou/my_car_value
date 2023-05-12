@@ -43,6 +43,11 @@ export class UsersController {
     return this.userServ.findOne(session.userId);
   }
 
+  @Post('/signout')
+  sginout(@Session() session: any) {
+    session.userId = null;
+  }
+
   @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
