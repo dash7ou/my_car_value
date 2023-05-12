@@ -23,8 +23,10 @@ export class AuthService {
     const hashPassword = `${salt}.${hash.toString('hex')}`;
 
     // create new user
+    const user = await this.userServ.create(email, hashPassword);
 
     // return the user
+    return user;
   }
 
   signin() {}
