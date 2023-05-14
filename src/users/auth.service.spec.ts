@@ -10,10 +10,21 @@ describe('Auth Service', () => {
 
   beforeEach(async () => {
     //create a fake copy of the user service
+    const users: User[] = [];
     fackeUserService = {
-      find: () => Promise.resolve([]),
-      create: (email: string, password: string) =>
-        Promise.resolve({ id: 1, email, password } as User),
+      find: (email) => {
+        const filterUser = users.filter((u) => u.email === email);
+        return Promise.resolve(filterUser);
+      },
+      create: (email: string, password: string) => {
+        const user = {
+          id: Math.floor(Math.random() * 999999),
+          email,
+          password,
+        } as User;
+        users.push(user);
+        return Promise.resolve(user);
+      },
     };
 
     const module = await Test.createTestingModule({
@@ -49,8 +60,8 @@ describe('Auth Service', () => {
     const email = 'tugrp@example.com';
     const password = 'password';
 
-    fackeUserService.find = () =>
-      Promise.resolve([{ id: 1, email: 'tst@s,ci', password: 'dsds' } as User]);
+
+    await service.signup(email, password);
 
     await expect(service.signup(email, password)).rejects.toThrow(
       BadRequestException,
@@ -70,8 +81,6 @@ describe('Auth Service', () => {
     const email = 'tugrp@example.com';
     const password = 'password';
 
-    fackeUserService.find = () =>
-      Promise.resolve([{ id: 1, email, password: 'dsds' } as User]);
 
     await expect(service.signin(email, password)).rejects.toThrow(
       BadRequestException,
@@ -82,15 +91,7 @@ describe('Auth Service', () => {
     const email = 'tugrp@example.com';
     const password = 'password';
 
-    fackeUserService.find = () =>
-      Promise.resolve([
-        {
-          id: 1,
-          email,
-          password:
-            'd8eb1779b30993e1.6f0229be83ed578f6617d2d027031e7dfc9ec722773e08bc46f34b75dd39c2a6',
-        } as User,
-      ]);
+    await service.signup(email, password);
 
     const user = await service.signin(email, password);
     expect(user).toBeDefined();
