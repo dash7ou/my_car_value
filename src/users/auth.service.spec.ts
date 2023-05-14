@@ -56,4 +56,13 @@ describe('Auth Service', () => {
       BadRequestException,
     );
   });
+
+  it('throws an error if email not exist', async () => {
+    const email = 'tugrp@example.com';
+    const password = 'password';
+
+    await expect(service.signin(email, password)).rejects.toThrow(
+      BadRequestException,
+    );
+  });
 });
