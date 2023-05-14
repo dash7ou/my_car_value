@@ -4,7 +4,6 @@ import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { User } from './users.entity';
 
-
 describe('UsersController', () => {
   let controller: UsersController;
   let fackeUserService: Partial<UsersService>;
@@ -47,5 +46,11 @@ describe('UsersController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  it('findAllUsers return all users with given email', async () => {
+    const users = await controller.findAllUsers('test@test.com');
+    expect(users.length).toEqual(1);
+    expect(users[0].email).toEqual('test@test.com');
   });
 });
