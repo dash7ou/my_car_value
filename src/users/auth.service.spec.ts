@@ -65,4 +65,34 @@ describe('Auth Service', () => {
       BadRequestException,
     );
   });
+
+  it('throws an error if password not matched', async () => {
+    const email = 'tugrp@example.com';
+    const password = 'password';
+
+    fackeUserService.find = () =>
+      Promise.resolve([{ id: 1, email, password: 'dsds' } as User]);
+
+    await expect(service.signin(email, password)).rejects.toThrow(
+      BadRequestException,
+    );
+  });
+
+  it('return user if correct password is provided', async () => {
+    const email = 'tugrp@example.com';
+    const password = 'password';
+
+    fackeUserService.find = () =>
+      Promise.resolve([
+        {
+          id: 1,
+          email,
+          password:
+            'd8eb1779b30993e1.6f0229be83ed578f6617d2d027031e7dfc9ec722773e08bc46f34b75dd39c2a6',
+        } as User,
+      ]);
+
+    const user = await service.signin(email, password);
+    expect(user).toBeDefined();
+  });
 });
