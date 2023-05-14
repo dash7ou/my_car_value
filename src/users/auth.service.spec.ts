@@ -60,7 +60,6 @@ describe('Auth Service', () => {
     const email = 'tugrp@example.com';
     const password = 'password';
 
-
     await service.signup(email, password);
 
     await expect(service.signup(email, password)).rejects.toThrow(
@@ -81,8 +80,9 @@ describe('Auth Service', () => {
     const email = 'tugrp@example.com';
     const password = 'password';
 
+    await service.signup(email, password);
 
-    await expect(service.signin(email, password)).rejects.toThrow(
+    await expect(service.signin(email, 'password666')).rejects.toThrow(
       BadRequestException,
     );
   });
