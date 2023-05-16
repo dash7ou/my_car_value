@@ -16,7 +16,7 @@ describe('Authentication System (e2e)', () => {
   });
 
   it('Handle a signup request', async () => {
-    const email = 'tesxt@teste2e.co';
+    const email = 'tesxxt@teste2e.co';
     const password = '1020258ddd';
 
     const { status, body } = await request(app.getHttpServer())
