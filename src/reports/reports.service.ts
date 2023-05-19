@@ -17,6 +17,10 @@ export class ReportsService {
       .createQueryBuilder()
       .select('*')
       .where(`make = :make`, { make: estimateDto.make })
+      .andWhere(`model = :model`, { model: estimateDto.model })
+      .orderBy(`ABS(mileage - :mileage)`, 'DESC')
+      .setParameters({ mileage: estimateDto.mileage })
+      .limit(3)
       .getRawMany();
   }
 
