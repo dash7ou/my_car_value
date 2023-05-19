@@ -24,9 +24,9 @@ export class ReportsController {
   constructor(private reportServ: ReportsService) {}
 
   @Get()
-  @Serialize(ReportDTO)
+  // @Serialize(ReportDTO)
   getEstimate(@Query() query: GetEstimateDTO){
-    return this.reportServ.getEstimate(query);
+    return this.reportServ.createEstimate(query);
   }
 
   @Post()
